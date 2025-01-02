@@ -1,0 +1,249 @@
+
+
+API Documentation:
+Base URL:
+All API routes are relative to the following base URL:
+```
+http://127.0.0.1:8000/api/
+```
+
+---
+
+Authentication
+To access most API endpoints, you need to authenticate using JWT tokens.
+
+Login: Get the JWT access and refresh tokens  in response by making a get request for login with a valid username and password in response
+Bearer Token: Include the JWT access token in the Authorization header for all requests that require authentication.
+
+Example Authorization Header:
+```
+Authorization: Bearer <access_token>
+```
+
+Endpoints:
+
+1. User Registration
+Endpoint: /users/register/
+Method: POST
+Description: Register a new user.
+Request Body: 
+
+json:
+{
+  "username": "new_user",
+  "password": "password123",
+  "email": "new_user@example.com"
+}
+
+Response (Success 201 Created):
+json
+
+{
+  "username": "new_user",
+  "email": "new_user@example.com"
+}
+
+Response (Error 400 Bad Request):
+json:
+
+{
+  "username": ["This field is required."],
+  "password": ["This field is required."]
+}
+
+2. User Login
+Endpoint: /users/login/
+Method: POST
+Description: Log in a user and obtain JWT tokens.
+Request Body:
+json
+
+{
+  "username": "new_user",
+  "password": "password123"
+}
+Response (Success 200 OK):
+json
+
+{
+  "refresh": "refresh_token",
+  "access": "access_token"
+}
+Response (Error 401 Unauthorized):
+json
+
+{
+  "error": "Invalid credentials"
+}
+
+
+3. Get All Projects
+Endpoint: /projects/
+Method: GET
+Description: Retrieve all projects (requires authentication).
+Authorization: Bearer <access_token>
+Response (Success 200 OK):
+
+json:
+[
+  {
+    "id": 1,
+    "name": "Project 1",
+    "description": "Description of Project 1",
+    "created_at": "2025-01-01T00:00:00Z",
+    "updated_at": "2025-01-01T00:00:00Z"
+  },
+  {
+    "id": 2,
+    "name": "Project 2",
+    "description": "Description of Project 2",
+    "created_at": "2025-01-02T00:00:00Z",
+    "updated_at": "2025-01-02T00:00:00Z"
+  }
+]
+
+4. Create a Project
+Endpoint: /projects/
+Method: POST
+Description: Create a new project (requires authentication).
+Authorization: Bearer <access_token>
+Request Body:
+json:
+{
+  "name": "New Project",
+  "description": "This is a description of the new project"
+}
+Response (Success 201 Created):
+json: 
+{
+  "id": 3,
+  "name": "New Project",
+  "description": "This is a description of the new project",
+  "created_at": "2025-01-02T00:00:00Z",
+  "updated_at": "2025-01-02T00:00:00Z"
+}
+Response (Error 400 Bad Request):
+json:
+{
+  "name": ["This field is required."],
+  "description": ["This field is required."]
+}
+
+5. Get All Tasks
+Endpoint: /tasks/
+Method: GET
+Description: Retrieve all tasks (requires authentication).
+Authorization: Bearer <access_token>
+Response (Success 200 OK):
+json:
+[
+  {
+    "id": 1,
+    "project": 1,
+    "title": "Task 1",
+    "description": "Description of Task 1",
+    "created_at": "2025-01-01T00:00:00Z",
+    "updated_at": "2025-01-01T00:00:00Z"
+  },
+  {
+    "id": 2,
+    "project": 1,
+    "title": "Task 2",
+    "description": "Description of Task 2",
+    "created_at": "2025-01-02T00:00:00Z",
+    "updated_at": "2025-01-02T00:00:00Z"
+  }
+
+6. Create a Task
+Endpoint: /tasks/
+Method: POST
+Description: Create a new task (requires authentication).
+Authorization: Bearer <access_token>
+Request Body:
+json:
+{
+  "project": 1,
+  "title": "New Task",
+  "description": "This is the description of the new task"
+}
+Response (Success 201 Created):
+json:
+{
+  "id": 3,
+  "project": 1,
+  "title": "New Task",
+  "description": "This is the description of the new task",
+  "created_at": "2025-01-02T00:00:00Z",
+  "updated_at": "2025-01-02T00:00:00Z"
+}
+Response (Error 400 Bad Request):
+json:
+{
+  "project": ["This field is required."],
+  "title": ["This field is required."],
+  "description": ["This field is required."]
+}
+
+
+7. Get All Comments
+Endpoint: /comments/
+Method: GET
+Description: Retrieve all comments (requires authentication).
+Authorization: Bearer <access_token>
+Response (Success 200 OK):
+json:
+[
+  {
+    "id": 1,
+    "task": 1,
+    "content": "This is a comment on task 1",
+    "created_at": "2025-01-01T00:00:00Z",
+    "updated_at": "2025-01-01T00:00:00Z"
+  },
+  {
+    "id": 2,
+    "task": 2,
+    "content": "This is a comment on task 2",
+    "created_at": "2025-01-02T00:00:00Z",
+    "updated_at": "2025-01-02T00:00:00Z"
+  }
+]
+
+8. Create a Comment
+Endpoint: /comments/
+Method: POST
+Description: Create a new comment for a task (requires authentication).
+Authorization: Bearer <access_token>
+Request Body:
+json:
+{
+  "task": 1,
+  "content": "This is a new comment"
+}
+Response (Success 201 Created):
+json:
+{
+  "id": 3,
+  "task": 1,
+  "content": "This is a new comment",
+  "created_at": "2025-01-02T00:00:00Z",
+  "updated_at": "2025-01-02T00:00:00Z"
+}
+Response (Error 400 Bad Request):
+json:
+  "task": ["This field is required."],
+  "content": ["This field is required."]
+}
+
+
+Error Codes: 
+400 Bad Request: The request is invalid (e.g., missing required fields, invalid data).
+401 Unauthorized: The user is not authenticated, or the provided credentials are incorrect.
+403 Forbidden: The user does not have permission to access the requested resource.
+404 Not Found: The requested resource (project, task, or comment) does not exist.
+500 Internal Server Error: A server error occurred while processing the request.
+
+JWT Token Expiration:
+Access Token: Expires after 0.5 hour.
+Refresh Token: Use the refresh token to obtain a new access token after it expires. The refresh token can be used indefinitely, but it can be revoked by the user or the server.
+
