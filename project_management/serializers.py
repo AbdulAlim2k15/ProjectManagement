@@ -21,6 +21,6 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ['id', 'content', 'user', 'task', 'created_at']
-    def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
-        return user
+    # def create(self, validated_data):
+    #     user = User.objects.create_user(**validated_data)
+    #     return user

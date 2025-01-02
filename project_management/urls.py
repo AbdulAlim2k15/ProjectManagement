@@ -10,4 +10,5 @@ router.register(r'comments', CommentViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('api/users/register/', UserViewSet.as_view({'post': 'register'}), name='register'),
 ]
