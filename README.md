@@ -16,18 +16,11 @@ This project provides a RESTful API for managing users, projects, tasks, and com
 
 ### Steps to Set Up
 
-1. **Clone the repository**:
-    ```bash
-    git clone https://github.com/AbdulAlim2k15/ProjectManagement.git
-    cd project-management-api
-    ```
-
-2. **Create a virtual environment**:
-    ```bash
+1. **Create and open a folder and  Create a virtual environment inside that folder **:
+     ```bash
     python -m venv venv
     ```
-
-3. **Activate the virtual environment**:
+2. **Activate the virtual environment**:
     - On Windows:
       ```bash
       venv\Scripts\activate
@@ -36,24 +29,30 @@ This project provides a RESTful API for managing users, projects, tasks, and com
       ```bash
       source venv/bin/activate
       ```
-
-4. **Install the required dependencies**:
+3. **Install the required dependencies**:
     ```bash
     pip install -r requirements.txt
     ```
-
-5. **Database migrations**:
+4. **Clone the repository**:
+   ```bash
+    git clone https://github.com/AbdulAlim2k15/ProjectManagement.git
+    ```
+5. **navigate to the ProjectManagement folder**:
+   ```bash
+    cd projectmanagement
+    ```
+6. **Database migrations**:
       ```bash
       python manage.py makemigrations
       python manage.py migrate
       ```
 
-6. **Create a superuser (optional, for admin access)**:
+7. **Create a superuser (optional, for admin access)**:
     ```bash
     python manage.py createsuperuser
     ```
 
-7. **Run the development server**:
+8. **Run the development server**:
     ```bash
     python manage.py runserver
     ```
